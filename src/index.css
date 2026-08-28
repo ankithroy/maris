@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+@import url('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
+
+@theme {
+  --color-deep-ocean: #061826;
+  --color-ocean-blue: #0B3D5C;
+  --color-marine-blue: #087EA4;
+  --color-cyan-acc: #22D3EE;
+
+  --color-pri-bg: #04111A;
+  --color-sec-bg: #071C28;
+  --color-sfc: #0B2432;
+
+  --color-glass-bg: rgba(255, 255, 255, 0.05);
+  --color-glass-border: rgba(255, 255, 255, 0.10);
+
+  --color-st-success: #22C55E;
+  --color-st-warning: #F59E0B;
+  --color-st-danger: #EF4444;
+  --color-st-info: #38BDF8;
+  --color-st-unknown: #A78BFA;
+
+  --color-det-ghostnet: #EF4444;
+  --color-det-shipwreck: #F97316;
+  --color-det-pipe: #F59E0B;
+  --color-det-cable: #A78BFA;
+  --color-det-debris: #22D3EE;
+  --color-det-natural: #22C55E;
+  --color-det-anomaly: #E879F9;
+
+  --color-tx-primary: #F8FAFC;
+  --color-tx-secondary: #CBD5E1;
+  --color-tx-muted: #94A3B8;
+  --color-tx-disabled: #64748B;
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+  --shadow-glass: 0 8px 40px rgba(0, 0, 0, 0.20);
+}
+
+body {
+  background-color: var(--color-pri-bg);
+  color: var(--color-tx-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.glass-panel {
+  background: var(--color-glass-bg);
+  border: 1px solid var(--color-glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-glass);
+  border-radius: 20px;
+}
+
+.glass-header {
+  background: var(--color-glass-bg);
+  border-bottom: 1px solid var(--color-glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-glass);
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
+.leaflet-container { background-color: #04111A !important; }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: transparent !important; box-shadow: none !important; padding: 0; }
+.leaflet-popup-content { margin: 0; }
