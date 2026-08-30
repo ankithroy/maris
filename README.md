@@ -1,32 +1,72 @@
-# React + TypeScript + Vite
+# 🌊 MARIS — Marine AI Reconnaissance & Intelligence System
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Live%20Demo-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://maris-virid.vercel.app/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live%20Host-22c55e?style=for-the-badge&logo=github&logoColor=white)](https://ankithroy.github.io/maris/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-8.2-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 
-Currently, two official plugins are available:
+**MARIS** is an advanced autonomous marine AI intelligence platform for real-time acoustic sonar analysis, 3D underwater bathymetry mapping, hydrographic survey telemetry, and coastal/riverine anomaly detection.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🌐 Live Deployments
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Platform | Live Host URL | Status |
+| :--- | :--- | :--- |
+| 🚀 **Vercel Production** | [https://maris-virid.vercel.app/](https://maris-virid.vercel.app/) | ![Active](https://img.shields.io/badge/Status-Active-success) |
+| 🐙 **GitHub Pages** | [https://ankithroy.github.io/maris/](https://ankithroy.github.io/maris/) | ![Active](https://img.shields.io/badge/Status-Active-success) |
 
-## Expanding the Oxlint configuration
+---
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## ✨ Key Capabilities & Subsystems
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+- 🛰️ **3D Bathymetry & Seabed Visualization**: Interactive depth contours, sub-bottom profiling, and topography mapping.
+- 📡 **Sonar DSP Analysis**: FFT frequency spectrum, acoustic signal-to-noise margin, and waterfall spectrogram processing.
+- 🗺️ **Brahmaputra & Maritime Map Overlays**: GIS Leaflet mapping integration for riverine and coastal navigation channels.
+- ⚠️ **AI Anomaly Detection**: Automated target categorization (wrecks, submerged debris, acoustic anomalies).
+- 📊 **Real-time Telemetry & Diagnostics**: AUV hardware metrics, memory latency tracking, and live telemetry feeds.
+- 🔐 **Cinematic Command Authentication**: Secure tactical operator portal.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend Framework**: React 19 + TypeScript + Vite 8
+* **Styling & UI Effects**: Tailwind CSS, Glassmorphism design system, Lucide Icons
+* **Animations**: Framer Motion
+* **Mapping & Visualizations**: Leaflet, React-Leaflet, Recharts
+* **State Management**: Zustand
+* **Routing**: React Router v7 (`/` routing on Vercel, `/maris/` base path on GitHub Pages)
+
+---
+
+## 🚀 Local Development Setup
+
+Clone the repository and launch the Vite development server locally:
+
+```bash
+# Clone the repository
+git clone https://github.com/ankithroy/maris.git
+
+# Navigate into project directory
+cd maris
+
+# Install dependencies
+npm install
+
+# Start Vite dev server
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Build for production:
+
+```bash
+npm run build
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
