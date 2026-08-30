@@ -1,7 +1,7 @@
-import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
+import { Toast } from '../ui/Toast';
 
 export function Layout() {
   return (
@@ -15,6 +15,7 @@ export function Layout() {
           <Outlet />
         </main>
       </div>
+      <Toast />
     </div>
   );
 }

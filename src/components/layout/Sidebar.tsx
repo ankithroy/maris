@@ -1,12 +1,12 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Activity, Map as MapIcon, Search, FileText, Database, Cpu, Settings, Waves, Radio } from 'lucide-react';
+import { Activity, Map as MapIcon, Search, FileText, Database, Cpu, Settings, Waves, Radio, Layers } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 export function Sidebar() {
   const navItems = [
     { to: '/', icon: Activity, label: 'Overview' },
     { to: '/sonar', icon: Waves, label: 'Sonar Analysis' },
+    { to: '/bathymetry', icon: Layers, label: 'Bathymetry 3D' },
     { to: '/live', icon: Radio, label: 'Live Survey' },
     { to: '/anomalies', icon: Search, label: 'Anomalies' },
     { to: '/map', icon: MapIcon, label: 'Map' },

@@ -1,6 +1,5 @@
-import React from 'react';
 import { GlassCard } from './GlassCard';
-import { LucideIcon, TrendingUp, TrendingDown } from 'lucide-react';
+import { type LucideIcon, TrendingUp, TrendingDown } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 interface MetricCardProps {

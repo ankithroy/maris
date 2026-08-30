@@ -1,13 +1,18 @@
-import React from 'react';
-import { Search, Bell, User } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
+import { Search, Bell, User, LogOut } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useMarisStore } from '../../lib/store';
 
 export function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const userEmail = useMarisStore((state) => state.userEmail);
+  const logout = useMarisStore((state) => state.logout);
+
   const getPageTitle = () => {
     switch (location.pathname) {
       case '/': return 'Overview';
       case '/sonar': return 'Sonar Analysis';
+      case '/bathymetry': return 'Bathymetry 3D';
       case '/live': return 'Live Survey';
       case '/anomalies': return 'Anomalies';
       case '/map': return 'Geospatial Map';
@@ -19,12 +24,17 @@ export function Header() {
     }
   };
 
+  const handleUserClick = () => {
+    logout();
+    navigate('/login');
+  };
+
   return (
     <header className="h-20 glass-header flex items-center justify-between px-8 mx-4 mt-4 rounded-[20px]">
       <div className="flex items-center gap-4">
         <h2 className="text-xl font-semibold text-tx-primary">{getPageTitle()}</h2>
         <div className="h-4 w-px bg-glass-border mx-2" />
-        <span className="text-xs text-tx-muted uppercase tracking-wider font-mono">Survey: BAY-042</span>
+        <span className="text-xs text-tx-muted uppercase tracking-wider font-mono">Survey: BRAHMAPUTRA-SEC-01</span>
       </div>
       <div className="flex items-center gap-6">
         <div className="relative group">
@@ -36,8 +46,19 @@ export function Header() {
             <Bell className="w-5 h-5" />
             <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-cyan-acc" />
           </button>
-          <div className="w-9 h-9 rounded-full bg-ocean-blue border border-cyan-acc/30 flex items-center justify-center cursor-pointer overflow-hidden group">
-            <User className="w-5 h-5 text-cyan-acc group-hover:scale-110 transition-transform" />
+          
+          <div 
+            onClick={handleUserClick}
+            className="flex items-center gap-2.5 bg-black/30 border border-glass-border hover:border-cyan-acc/40 px-3 py-1.5 rounded-full cursor-pointer transition-colors group"
+            title="Sign Out / Open Access Portal"
+          >
+            <div className="w-7 h-7 rounded-full bg-cyan-acc/20 border border-cyan-acc/40 flex items-center justify-center overflow-hidden">
+              <User className="w-4 h-4 text-cyan-acc group-hover:scale-110 transition-transform" />
+            </div>
+            <span className="text-xs font-mono font-medium text-tx-secondary group-hover:text-tx-primary">
+              {userEmail ? userEmail.split('@')[0] : 'Sign In'}
+            </span>
+            <LogOut className="w-3.5 h-3.5 text-tx-muted group-hover:text-cyan-acc ml-1" />
           </div>
         </div>
       </div>

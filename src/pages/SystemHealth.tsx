@@ -1,56 +1,111 @@
-import React from 'react';
+import { useMarisStore } from '../lib/store';
 import { GlassCard } from '../components/ui/GlassCard';
 import { Badge } from '../components/ui/Badge';
-import { CheckCircle2, Server, Cpu, HardDrive, Wifi, Radio } from 'lucide-react';
+import { CheckCircle2, Server, Cpu, HardDrive, Wifi, Radio, RefreshCw, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export function SystemHealth() {
-  const systems = [
-    { name: 'AI Inference Engine', status: 'operational', icon: Server, latency: '42ms' },
-    { name: 'Sonar Data Ingestion', status: 'operational', icon: HardDrive, latency: '12ms' },
-    { name: 'Geospatial DB', status: 'operational', icon: Server, latency: '8ms' },
-    { name: 'AUV Telemetry Link', status: 'operational', icon: Radio, latency: '120ms' },
-    { name: 'GPS / IMU Stream', status: 'operational', icon: Wifi, latency: '15ms' },
+  const isDiagnosticRunning = useMarisStore((state) => state.isDiagnosticRunning);
+  const diagnosticProgress = useMarisStore((state) => state.diagnosticProgress);
+  const runDiagnostics = useMarisStore((state) => state.runDiagnostics);
+
+  const subsystems = [
+    { name: 'Multibeam Transducer (EdgeTech 4200)', status: 'OPERATIONAL', latency: '2.4ms', icon: Radio },
+    { name: 'NVIDIA Jetson AGX Orin Inference Node', status: 'OPERATIONAL', latency: '42.1ms', icon: Cpu },
+    { name: 'AUV Acoustic Telemetry Modem', status: 'OPERATIONAL', latency: '12.8ms', icon: Wifi },
+    { name: 'PostgreSQL PostGIS Geospatial Storage', status: 'OPERATIONAL', latency: '1.1ms', icon: HardDrive },
+    { name: 'Vessel Gateway Edge Service', status: 'OPERATIONAL', latency: '0.8ms', icon: Server },
   ];
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between bg-st-success/10 border border-st-success/30 p-4 rounded-2xl">
-        <div className="flex items-center gap-3 text-st-success">
-          <CheckCircle2 className="w-8 h-8" />
-          <div><h2 className="font-bold text-lg">ALL SYSTEMS OPERATIONAL</h2><p className="text-sm opacity-80">Last checked: Just now</p></div>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-tx-primary tracking-tight">System Health & Diagnostics</h2>
+          <p className="text-tx-secondary text-sm">AUV hardware status, telemetry bandwidth, and edge compute nodes.</p>
         </div>
-        <Badge variant="success" className="px-3 py-1 font-mono">STATUS: GREEN</Badge>
+        <button 
+          onClick={() => runDiagnostics()}
+          disabled={isDiagnosticRunning}
+          className="px-5 py-2.5 rounded-xl bg-cyan-acc text-deep-ocean font-bold hover:bg-cyan-acc/90 transition-colors shadow-[0_0_20px_rgba(34,211,238,0.3)] text-sm flex items-center gap-2 disabled:opacity-50 cursor-pointer"
+        >
+          <RefreshCw className={`w-4 h-4 ${isDiagnosticRunning ? 'animate-spin' : ''}`} />
+          {isDiagnosticRunning ? `Running Diagnostics (${diagnosticProgress}%)` : 'Run Diagnostics'}
+        </button>
       </div>
+
+      {/* Progress Bar during diagnostic run */}
+      {isDiagnosticRunning && (
+        <GlassCard className="p-4 space-y-2 border-cyan-acc/40">
+          <div className="flex justify-between text-xs font-mono">
+            <span className="text-cyan-acc font-semibold flex items-center gap-2">
+              <Activity className="w-4 h-4 animate-pulse" /> Testing Subsystem Connectivity & Memory Latency...
+            </span>
+            <span className="text-tx-primary font-bold">{diagnosticProgress}%</span>
+          </div>
+          <div className="h-2 bg-black/40 rounded-full overflow-hidden border border-glass-border">
+            <motion.div 
+              className="h-full bg-cyan-acc"
+              animate={{ width: `${diagnosticProgress}%` }}
+              transition={{ ease: 'easeInOut' }}
+            />
+          </div>
+        </GlassCard>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <GlassCard className="p-5 flex flex-col gap-3">
-          <div className="flex items-center justify-between text-tx-secondary mb-2"><div className="flex items-center gap-2"><Cpu className="w-4 h-4" /> GPU Utilization</div><span className="font-mono">84%</span></div>
-          <div className="h-2 w-full bg-glass-bg rounded-full overflow-hidden"><motion.div initial={{ width: 0 }} animate={{ width: '84%' }} className="h-full bg-cyan-acc" /></div>
-          <p className="text-xs text-tx-muted text-right">NVIDIA RTX 4090</p>
+        <GlassCard className="p-5 flex items-center gap-4">
+          <div className="p-3 rounded-xl bg-st-success/10 border border-st-success/30 text-st-success">
+            <CheckCircle2 className="w-8 h-8" />
+          </div>
+          <div>
+            <p className="text-xs text-tx-muted uppercase tracking-wider font-semibold">Overall System Status</p>
+            <p className="text-xl font-bold text-st-success">100% Operational</p>
+          </div>
         </GlassCard>
-        <GlassCard className="p-5 flex flex-col gap-3">
-          <div className="flex items-center justify-between text-tx-secondary mb-2"><div className="flex items-center gap-2"><Cpu className="w-4 h-4" /> CPU Utilization</div><span className="font-mono">32%</span></div>
-          <div className="h-2 w-full bg-glass-bg rounded-full overflow-hidden"><motion.div initial={{ width: 0 }} animate={{ width: '32%' }} className="h-full bg-st-success" /></div>
-          <p className="text-xs text-tx-muted text-right">AMD Ryzen Threadripper</p>
+
+        <GlassCard className="p-5 flex items-center gap-4">
+          <div className="p-3 rounded-xl bg-cyan-acc/10 border border-cyan-acc/30 text-cyan-acc">
+            <Wifi className="w-8 h-8" />
+          </div>
+          <div>
+            <p className="text-xs text-tx-muted uppercase tracking-wider font-semibold">Acoustic Signal Margin</p>
+            <p className="text-xl font-bold text-tx-primary">+18.4 dB</p>
+          </div>
         </GlassCard>
-        <GlassCard className="p-5 flex flex-col gap-3">
-          <div className="flex items-center justify-between text-tx-secondary mb-2"><div className="flex items-center gap-2"><Server className="w-4 h-4" /> Memory</div><span className="font-mono">42GB / 128GB</span></div>
-          <div className="h-2 w-full bg-glass-bg rounded-full overflow-hidden"><motion.div initial={{ width: 0 }} animate={{ width: '33%' }} className="h-full bg-cyan-acc" /></div>
-          <p className="text-xs text-tx-muted text-right">DDR5 ECC</p>
+
+        <GlassCard className="p-5 flex items-center gap-4">
+          <div className="p-3 rounded-xl bg-cyan-acc/10 border border-cyan-acc/30 text-cyan-acc">
+            <Cpu className="w-8 h-8" />
+          </div>
+          <div>
+            <p className="text-xs text-tx-muted uppercase tracking-wider font-semibold">GPU Memory Utilization</p>
+            <p className="text-xl font-bold text-tx-primary">4.2 / 16 GB (26%)</p>
+          </div>
         </GlassCard>
       </div>
-      <h3 className="font-semibold text-tx-primary mt-8 mb-4">Service Status</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {systems.map((sys) => (
-          <GlassCard key={sys.name} className="flex items-center justify-between p-4 hover:bg-white/5 transition-colors">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-black/20 rounded-lg border border-glass-border"><sys.icon className="w-5 h-5 text-tx-secondary" /></div>
-              <div><p className="font-medium text-tx-primary">{sys.name}</p><p className="text-xs font-mono text-tx-muted">Latency: {sys.latency}</p></div>
+
+      <GlassCard className="p-6 space-y-4">
+        <h3 className="font-bold text-lg text-tx-primary border-b border-glass-border pb-3">Subsystem Status Feed</h3>
+        <div className="space-y-3">
+          {subsystems.map((sub, i) => (
+            <div key={i} className="p-3.5 rounded-xl bg-black/30 border border-glass-border flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3.5">
+                <div className="p-2 rounded-lg bg-glass-bg text-cyan-acc border border-glass-border">
+                  <sub.icon className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-sm text-tx-primary">{sub.name}</h4>
+                  <span className="text-xs font-mono text-tx-muted">Ping Latency: {sub.latency}</span>
+                </div>
+              </div>
+              <Badge variant="success" className="flex items-center gap-1">
+                <CheckCircle2 className="w-3 h-3" /> {sub.status}
+              </Badge>
             </div>
-            <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-st-success animate-pulse" /><span className="text-sm text-st-success font-medium uppercase tracking-wider">{sys.status}</span></div>
-          </GlassCard>
-        ))}
-      </div>
+          ))}
+        </div>
+      </GlassCard>
     </div>
   );
 }
